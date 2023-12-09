@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="https://www.thymeleaf.org" lang="hu">
+<head>
+    <meta charset="UTF-8">
+    <title>Kék Ördög Autószalon</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <style>
+        .logo
+        {
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <h1>Kék Ördög Autószalon</h1>
+        </div>
+    </header>
+    <table class="table table-dark">
+        <thead>
+        <tr>
+            <th scope="col">Rendszám</th>
+            <th scope="col">Gyártó</th>
+            <th scope="col">Típus</th>
+            <th scope="col">Lóerő</th>
+            <th scope="col">Veszélyes opciók</th>
+        </tr>
+        </thead>
+        <tbody>
+            <tr th:each="autoAdatai : ${autoList}">
+                <td th:text="*{autoAdatai.GetRendszam()}"/>
+                <td th:text="*{autoAdatai.GetGyarto()}"/>
+                <td th:text="*{autoAdatai.GetTipus()}"/>
+                <td th:text="*{autoAdatai.GetLoero()}"/>
+                <td>
+                    <form th:action="@{'/update-car/' + ${autoAdatai.GetRendszam()}}" method="POST">
+                        <input type="hidden" name="rendszamId" th:value="${autoAdatai.GetRendszam()}" />
+                        <input type="hidden" name="gyartoNev" th:value="${autoAdatai.GetGyarto()}" />
+                        <input type="hidden" name="tipusNev" th:value="${autoAdatai.GetTipus()}" />
+                        <input type="hidden" name="loeroSzam" th:value="${autoAdatai.GetLoero()}" />
+                        <button type="submit" class="btn btn-primary">Szerkesztés</button>
+                    </form>
+                    <form th:action="@{'/delete-car/' + ${autoAdatai.GetRendszam()}}" method="POST">
+                        <input type="hidden" name="rendszamId" th:value="${autoAdatai.GetRendszam()}" />
+                        <input type="hidden" name="gyartoNev" th:value="${autoAdatai.GetGyarto()}" />
+                        <input type="hidden" name="tipusNev" th:value="${autoAdatai.GetTipus()}" />
+                        <input type="hidden" name="loeroSzam" th:value="${autoAdatai.GetLoero()}" />
+                        <button type="submit" class="btn btn-danger">Törlés</button>
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="text-center">
+        <a href="/add-cars" class="btn btn-success">Autók hozzáadása</a>
+    </div>
+</body>
+</html>
