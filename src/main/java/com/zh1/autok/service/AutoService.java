@@ -43,7 +43,7 @@ public class AutoService
         {
             if (rendszam.equals(autoModel.GetRendszam()))
             {
-                throw new RuntimeException("HIBA: Már létezik ilyen rendszámú autó!");
+                throw new IllegalArgumentException("HIBA: Már létezik ilyen rendszámú autó!");
             }
         }
         AutoModel autoDetails = new AutoModel(rendszam, gyarto, tipus, loero);
